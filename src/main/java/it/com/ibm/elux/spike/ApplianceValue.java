@@ -18,8 +18,6 @@ public class ApplianceValue
     @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
     private String unitsOfMeasurement;
 
-    private OperationMode operationMode;
-
     public static ApplianceValue getRandom()
     {
         Random rndSeed = new Random();

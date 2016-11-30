@@ -29,6 +29,21 @@ public class Properties
         return Properties.getStrings()[index];
     }
 
+    public static String getRandomParent()
+    {
+        int propertyLen = Properties.getParents().length;
+        int index = new Random().nextInt(propertyLen-1);
+        return Properties.getParents()[index];
+    }
+
+    public static String[] getParents()
+    {
+        return new String[]{
+                "FC-User Selections",
+                "FC-Program Parameters"
+        };
+    }
+
     public static String[] getStrings()
     {
         return new String[]{

@@ -20,7 +20,7 @@ public class Main
         String schema = null;
         try
         {
-            schema = Main.getJsonSchema(ApplianceMessage.class);
+            schema = Main.getJSONSchema(ApplianceMessage.class);
         }
         catch (IOException e)
         {
@@ -31,11 +31,11 @@ public class Main
         System.out.println("");
         System.out.println("Message Examples v.0.1");
         System.out.println("");
-        Main.getJsons();
+        Main.getJSONs();
 
     }
 
-    private static void getJsons()
+    private static void getJSONs()
     {
         int howMany = 10;
         while (howMany>0)
@@ -46,7 +46,7 @@ public class Main
         }
     }
 
-    public static String getJsonSchema(Class clazz) throws IOException
+    private static String getJSONSchema(Class clazz) throws IOException
     {
         org.codehaus.jackson.map.ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationConfig.Feature.WRITE_ENUMS_USING_TO_STRING, true);

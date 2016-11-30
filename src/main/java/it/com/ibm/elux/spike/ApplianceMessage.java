@@ -1,9 +1,11 @@
 package it.com.ibm.elux.spike;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
@@ -13,13 +15,19 @@ public class ApplianceMessage
 
     private Device originatingDevice;
     private String version;
+
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
+    private String parent;
+
     private String property;
     private ApplianceValue value;
     private Date timestamp;
+    private OperationMode operationMode;
 
     public ApplianceMessage()
     {
         this.timestamp = new Date();
+        this.operationMode = OperationMode.INF_SEND;
     }
 
     public static ApplianceMessage generate()
@@ -29,6 +37,10 @@ public class ApplianceMessage
         am.originatingDevice = new Device("pnc1", "ecl1", "12345678");
         am.property = Properties.getRandomName();
         am.setValue(ApplianceValue.getRandom());
+        if (new Random().nextInt(5) == 4)
+        {
+            am.parent = Properties.getRandomParent();
+        }
         return am;
     }
 
@@ -77,6 +89,26 @@ public class ApplianceMessage
         return timestamp;
     }
 
+    public String getParent()
+    {
+        return parent;
+    }
+
+    public void setParent(String parent)
+    {
+        this.parent = parent;
+    }
+
+    public OperationMode getOperationMode()
+    {
+        return operationMode;
+    }
+
+    public void setOperationMode(OperationMode operationMode)
+    {
+        this.operationMode = operationMode;
+    }
+
     public String toJson()
     {
         ObjectMapper mapper = new ObjectMapper();
@@ -97,4 +129,6 @@ public class ApplianceMessage
     {
         return "["+this.version+"] "+this.property+" = "+this.value.toString();
     }
+
+
 }
