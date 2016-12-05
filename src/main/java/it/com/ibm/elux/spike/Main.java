@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.schema.JsonSchema;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
@@ -38,9 +39,11 @@ public class Main
     private static void getJSONs()
     {
         int howMany = 10;
+        Random rnd = new Random();
         while (howMany>0)
         {
-            ApplianceMessage am = ApplianceMessage.generate();
+            System.out.println("******************************************");
+            ApplianceMessage am = Generator.generate(rnd);
             System.out.println(am.toJson());
             howMany--;
         }

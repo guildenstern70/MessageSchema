@@ -1,7 +1,10 @@
 package it.com.ibm.elux.spike.test;
 
 import it.com.ibm.elux.spike.ApplianceMessage;
+import it.com.ibm.elux.spike.Generator;
 import org.junit.*;
+
+import java.util.Random;
 
 /**
  *
@@ -38,9 +41,10 @@ public class BasicTest
     public void generate()
     {
         int howMany = 100;
+        Random rnd = new Random();
         while (howMany>0)
         {
-            ApplianceMessage am = ApplianceMessage.generate();
+            ApplianceMessage am = Generator.generate(rnd);
             System.out.println(am.toString());
             howMany--;
         }

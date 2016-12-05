@@ -1,47 +1,43 @@
 package it.com.ibm.elux.spike;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
+import java.util.List;
 
 /**
  *
  */
 public class ApplianceMessage
 {
-
-    private Device originatingDevice;
+    private String source;
+    private String destination;
     private String version;
 
     @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
-    private String parent;
+    private List<Property> properties;
 
-    private String property;
-    private ApplianceValue value;
     private Date timestamp;
     private OperationMode operationMode;
 
     public ApplianceMessage()
     {
+        this.properties = new ArrayList<>();
+
+        Property property = new Property();
+        this.properties.add(property);
+
         this.timestamp = new Date();
         this.operationMode = OperationMode.INF_SEND;
     }
 
-    public static ApplianceMessage generate()
+    public void addProperty(Property component)
     {
-        ApplianceMessage am = new ApplianceMessage();
-        am.version = "ad";
-        am.originatingDevice = new Device("pnc1", "ecl1", "12345678");
-        am.property = Properties.getRandomName();
-        am.setValue(ApplianceValue.getRandom());
-        if (new Random().nextInt(5) == 4)
-        {
-            am.parent = Properties.getRandomParent();
-        }
-        return am;
+        this.properties.add(component);
     }
 
     public String getVersion()
@@ -54,49 +50,9 @@ public class ApplianceMessage
         this.version = version;
     }
 
-    public String getProperty()
-    {
-        return property;
-    }
-
-    public void setProperty(String property)
-    {
-        this.property = property;
-    }
-
-    public ApplianceValue getValue()
-    {
-        return value;
-    }
-
-    public void setValue(ApplianceValue value)
-    {
-        this.value = value;
-    }
-
-    public Device getOriginatingDevice()
-    {
-        return originatingDevice;
-    }
-
-    public void setOriginatingDevice(Device originatingDevice)
-    {
-        this.originatingDevice = originatingDevice;
-    }
-
     public Date getTimestamp()
     {
         return timestamp;
-    }
-
-    public String getParent()
-    {
-        return parent;
-    }
-
-    public void setParent(String parent)
-    {
-        this.parent = parent;
     }
 
     public OperationMode getOperationMode()
@@ -115,7 +71,7 @@ public class ApplianceMessage
         String jsonString = null;
         try
         {
-            jsonString = mapper.writeValueAsString(this);
+            jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
         }
         catch (IOException e)
         {
@@ -127,8 +83,45 @@ public class ApplianceMessage
     @Override
     public String toString()
     {
-        return "["+this.version+"] "+this.property+" = "+this.value.toString();
+        Property mainProperty = this.getMainProperty();
+        return "["+this.version+"] "+mainProperty.getName()+" = "+mainProperty.getValue().toString();
     }
 
+    @JsonIgnore
+    public Property getMainProperty()
+    {
+        return this.properties.get(0);
+    }
+
+    public String getSource()
+    {
+        return source;
+    }
+
+    public void setSource(String source)
+    {
+        this.source = source;
+    }
+
+    public String getDestination()
+    {
+        return destination;
+    }
+
+    public void setDestination(String destination)
+    {
+        this.destination = destination;
+    }
+
+    public List<Property> getProperties()
+    {
+        return properties;
+    }
+
+    @JsonIgnore
+    public String getName()
+    {
+        return this.properties.get(0).getName();
+    }
 
 }

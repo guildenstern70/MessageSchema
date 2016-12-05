@@ -5,35 +5,35 @@ import java.util.Random;
 /**
  *
  */
-public class Properties
+public class LookupTables
 {
 
     public static String getRandomName()
     {
-        int propertyLen = Properties.getNames().length;
+        int propertyLen = LookupTables.getNames().length;
         int index = new Random().nextInt(propertyLen-1);
-        return Properties.getNames()[index];
+        return LookupTables.getNames()[index];
     }
 
     public static String getRandomUnit()
     {
-        int propertyLen = Properties.getUnits().length;
+        int propertyLen = LookupTables.getUnits().length;
         int index = new Random().nextInt(propertyLen-1);
-        return Properties.getUnits()[index];
+        return LookupTables.getUnits()[index];
     }
 
     public static String getRandomString()
     {
-        int propertyLen = Properties.getStrings().length;
+        int propertyLen = LookupTables.getStrings().length;
         int index = new Random().nextInt(propertyLen-1);
-        return Properties.getStrings()[index];
+        return LookupTables.getStrings()[index];
     }
 
     public static String getRandomParent()
     {
-        int propertyLen = Properties.getParents().length;
+        int propertyLen = LookupTables.getParents().length;
         int index = new Random().nextInt(propertyLen-1);
-        return Properties.getParents()[index];
+        return LookupTables.getParents()[index];
     }
 
     public static String[] getParents()
