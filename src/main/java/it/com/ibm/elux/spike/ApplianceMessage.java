@@ -19,25 +19,25 @@ public class ApplianceMessage
     private String version;
 
     @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
-    private List<Property> properties;
+    private List<Component> components;
 
     private Date timestamp;
     private OperationMode operationMode;
 
     public ApplianceMessage()
     {
-        this.properties = new ArrayList<>();
+        this.components = new ArrayList<>();
 
-        Property property = new Property();
-        this.properties.add(property);
+        Component component = new Component();
+        this.components.add(component);
 
         this.timestamp = new Date();
         this.operationMode = OperationMode.INF_SEND;
     }
 
-    public void addProperty(Property component)
+    public void addComponent(Component component)
     {
-        this.properties.add(component);
+        this.components.add(component);
     }
 
     public String getVersion()
@@ -83,14 +83,14 @@ public class ApplianceMessage
     @Override
     public String toString()
     {
-        Property mainProperty = this.getMainProperty();
-        return "["+this.version+"] "+mainProperty.getName()+" = "+mainProperty.getValue().toString();
+        Component mainComponent = this.getMainProperty();
+        return "[" + this.version + "] " + mainComponent.getName() + " = " + mainComponent.getValue().toString();
     }
 
     @JsonIgnore
-    public Property getMainProperty()
+    public Component getMainProperty()
     {
-        return this.properties.get(0);
+        return this.components.get(0);
     }
 
     public String getSource()
@@ -113,15 +113,15 @@ public class ApplianceMessage
         this.destination = destination;
     }
 
-    public List<Property> getProperties()
+    public List<Component> getComponents()
     {
-        return properties;
+        return components;
     }
 
     @JsonIgnore
     public String getName()
     {
-        return this.properties.get(0).getName();
+        return this.components.get(0).getName();
     }
 
 }

@@ -1,8 +1,8 @@
 package it.com.ibm.elux.spike;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.schema.JsonSchema;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
+import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 
 import java.io.IOException;
 import java.util.Random;
@@ -18,6 +18,17 @@ public class Main
         System.out.println("Message Schema v.0.1");
         System.out.println("");
 
+        printSchema();
+
+        System.out.println("");
+        System.out.println("Message Examples v.0.1");
+        System.out.println("");
+        Main.getJSONs();
+
+    }
+
+    private static void printSchema()
+    {
         String schema = null;
         try
         {
@@ -28,12 +39,6 @@ public class Main
             e.printStackTrace();
         }
         System.out.println(schema);
-
-        System.out.println("");
-        System.out.println("Message Examples v.0.1");
-        System.out.println("");
-        Main.getJSONs();
-
     }
 
     private static void getJSONs()
@@ -51,9 +56,11 @@ public class Main
 
     private static String getJSONSchema(Class clazz) throws IOException
     {
-        org.codehaus.jackson.map.ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.WRITE_ENUMS_USING_TO_STRING, true);
-        JsonSchema schema = mapper.generateJsonSchema(clazz);
+        ObjectMapper mapper = new ObjectMapper();
+
+        JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
+        JsonSchema schema = schemaGen.generateSchema(clazz);
+
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(schema);
     }
 }
