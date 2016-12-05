@@ -83,12 +83,12 @@ public class ApplianceMessage
     @Override
     public String toString()
     {
-        Component mainComponent = this.getMainProperty();
+        Component mainComponent = this.components.get(0);
         return "[" + this.version + "] " + mainComponent.getName() + " = " + mainComponent.getValue().toString();
     }
 
     @JsonIgnore
-    public Component getMainProperty()
+    Component getMainProperty()
     {
         return this.components.get(0);
     }

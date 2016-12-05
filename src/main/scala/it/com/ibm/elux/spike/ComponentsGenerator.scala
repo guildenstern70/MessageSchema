@@ -20,7 +20,7 @@ object ComponentsGenerator
         for ((kv, index) <- components.zipWithIndex)
         {
 
-            val property = new Component(index)
+            val property = new Component()
             property.setName(kv._2)
 
             property.setValue( if (kv._1.contains('.'))

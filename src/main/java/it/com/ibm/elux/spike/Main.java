@@ -43,11 +43,12 @@ public class Main
 
     private static void getJSONs()
     {
-        int howMany = 10;
+        int howMany = 100;
         Random rnd = new Random();
         while (howMany>0)
         {
-            System.out.println("******************************************");
+            System.out.println("");
+            System.out.println("");
             ApplianceMessage am = Generator.generate(rnd);
             System.out.println(am.toJson());
             howMany--;
