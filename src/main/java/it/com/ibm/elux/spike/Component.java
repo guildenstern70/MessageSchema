@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -69,5 +75,11 @@ public class Component
     public void setValue(Object value)
     {
         this.value = value;
+    }
+
+    @Override
+    public String toString()
+    {
+        return " Component: " + this.getName() + " > Value = " + this.getValue();
     }
 }

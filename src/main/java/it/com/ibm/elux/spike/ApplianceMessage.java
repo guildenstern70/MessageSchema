@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -81,8 +87,25 @@ public class ApplianceMessage
     @Override
     public String toString()
     {
-        Component mainComponent = this.components.get(0);
-        return "[" + this.version + "] " + mainComponent.getName() + " = " + mainComponent.getValue().toString();
+        StringBuilder sb = new StringBuilder("[" + this.version + "] ");
+        if (this.isContainer())
+        {
+            sb.append("CONTAINER ");
+            sb.append("Name: ").append(this.getName()).append("\n");
+            for (Component c : this.getComponents())
+            {
+                sb.append(c.toString());
+                sb.append("\n");
+            }
+        }
+        else
+        {
+            Component mainComponent = this.components.get(0);
+            sb.append(" Name = ").append(mainComponent.getName());
+            sb.append(" Value = ").append(mainComponent.getValue());
+        }
+
+        return sb.toString();
     }
 
     public String getSource()
@@ -118,5 +141,14 @@ public class ApplianceMessage
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    protected boolean isContainer()
+    {
+        if (this.getName() != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

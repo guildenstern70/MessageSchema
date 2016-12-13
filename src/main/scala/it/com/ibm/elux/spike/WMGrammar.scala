@@ -1,12 +1,100 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike
 
-import scala.collection.mutable
+import scala.collection.immutable.HashMap
+import scala.collection.{immutable, mutable}
 
 /**
   *
   */
 object WMGrammar
 {
+
+    val alljoynmap: HashMap[String, String] = immutable.HashMap[String, String](
+        "AlertEvent" -> "0470",
+        "AnalogSpinSpeed" -> "?",
+        "AnalogTemperature" -> "?",
+        "AntiCreasePhase" -> "?",
+        "ApplianceBootState" -> "04B4",
+        "ApplianceElc" -> "000A",
+        "ApplianceMainBoardSwVersion" -> "0016",
+        "ApplianceMode" -> "0400",
+        "AppliancePnc" -> "0007",
+        "ApplianceState" -> "0401",
+        "ApplianceTotalWorkingTime" -> "04B5",
+        "ApplianceUiSwVersion" -> "0013",
+        "CurrentDetergentDoseOne" -> "1C1D",
+        "CurrentDetergentDoseTwo" -> "1C1E",
+        "CyclePhase" -> "1C10",
+        "CycleSubPhase" -> "1C11",
+        "DoorLock" -> "0461",
+        "DoorState" -> "0460",
+        "DrainPhase" -> "?",
+        "DryingTime" -> "?",
+        "ExecuteCommand" -> "0403",
+        "ExtraRinseDefault" -> "?",
+        "Language" -> "0422",
+        "LinkQualityIndicator" -> "0032",
+        "LocalTime" -> "0482",
+        "MacAddress" -> "0030",
+        "MaxDryingTime" -> "?",
+        "MaxLoadDetergentDoseOne" -> "1C1A",
+        "MaxLoadDetergentDoseTwo" -> "1C1B",
+        "MaxRinseNumber" -> "?",
+        "MaxSpinStep" -> "?",
+        "MaxSteamValue" -> "?",
+        "MaxTemperatureStep" -> "?",
+        "MeasuredLoadWeight" -> "1C14",
+        "MinDryingTime" -> "?",
+        "MinRinseNumber" -> "?",
+        "MinSpinStep" -> "?",
+        "MinSteamValue" -> "?",
+        "MinTemperatureStep" -> "?",
+        "NightCycle" -> "?",
+        "NiuAlertEvent" -> "0473",
+        "PreWashPhase" -> "?",
+        "ProgramMemoryPosition" -> "?",
+        "ProgramParameters" -> "1C0A",
+        "ProgramUID" -> "?",
+        "RemoteControl" -> "0402",
+        "RinseHold" -> "?",
+        "RinseNumber" -> "?",
+        "RinsePhase" -> "?",
+        "SerialNumber" -> "0002",
+        "SilentMode" -> "0425",
+        "Soak" -> "?",
+        "Softener" -> "?",
+        "SpinPhase" -> "?",
+        "Stain" -> "?",
+        "StartTime" -> "0412",
+        "SteamPhase" -> "?",
+        "SteamValue" -> "?",
+        "TimeManagerLevel" -> "?",
+        "TimeToEnd" -> "0411",
+        "TimeToNotify" -> "?",
+        "UiLockMode" -> "0463",
+        "UserSelections" -> "1C09",
+        "WDDryingLevel" -> "?",
+        "WDEnabledDryFabricTypeChange" -> "?",
+        "WDEnabledDryingLevel" -> "?",
+        "WMEconomy" -> "?",
+        "WashPhase" -> "?",
+        "WashingNominalLoadWeight" -> "1C12",
+        "WaterHardness" -> "04E1",
+        "WaterSoftenerMode" -> "1C19"
+    )
+
+    val availableNames: Array[String] =
+    {
+        val namesMap = this.alljoynmap.filter
+        { case (_, v) => v != "?" }
+        namesMap.values.toArray[String]
+    }
 
     val programParametersComponents: mutable.LinkedHashMap[String, String] = mutable.LinkedHashMap(
 

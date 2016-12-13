@@ -1,2 +1,8 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 rootProject.name = 'MessageSchema'
 

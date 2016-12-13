@@ -1,8 +1,16 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike.test;
 
 import it.com.ibm.elux.spike.ApplianceMessage;
+import it.com.ibm.elux.spike.ApplianceMessageFactory;
 import it.com.ibm.elux.spike.Generator;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Random;
 
@@ -12,29 +20,17 @@ import java.util.Random;
 public class BasicTest
 {
 
-    // Run once, e.g. Database connection, connection pool
-    @BeforeClass
-    public static void runOnceBeforeClass()
+    @Test
+    public void createFromJSON()
     {
-    }
+        String[] jsons = InputValues.getJSONMessages();
 
-    // Run once, e.g close connection, cleanup
-    @AfterClass
-    public static void runOnceAfterClass()
-    {
-    }
-
-    // Should rename to @BeforeTestMethod
-    // e.g. Creating an similar object and share for all @Test
-    @Before
-    public void runBeforeTestMethod()
-    {
-    }
-
-    // Should rename to @AfterTestMethod
-    @After
-    public void runAfterTestMethod()
-    {
+        for (String json : jsons)
+        {
+            ApplianceMessage am = ApplianceMessageFactory.fromJSON(json);
+            Assert.assertNotNull(am);
+            System.out.println(am.toString());
+        }
     }
 
     @Test
@@ -45,11 +41,11 @@ public class BasicTest
         while (howMany>0)
         {
             ApplianceMessage am = Generator.generate(rnd);
+            Assert.assertNotNull(am);
             System.out.println(am.toString());
             howMany--;
         }
     }
-
 
 
 }

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike
 
 import scala.collection.mutable
@@ -21,7 +27,7 @@ object ComponentsGenerator
         {
 
             val property = new Component()
-            property.setName(kv._2)
+            property.setName(kv._1)
 
             property.setValue( if (kv._1.contains('.'))
                 Component.getRandomBoolean

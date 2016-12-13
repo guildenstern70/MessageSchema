@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike;
 
 import org.jetbrains.annotations.Contract;
@@ -84,44 +90,6 @@ public class LookupTables
     @Contract(" -> !null")
     private static String[] getNames()
     {
-        return new String[] {
-                "ApplianceMode",
-                "DoorLock",
-                "CurrentDetergentDoseTwo",
-                "LinkQualityIndicator",
-                "SilentMode",
-                "MaxLoadDetergentDoseOne",
-                "CurrentDetergentDoseOne",
-                "MeasuredLoadWeight",
-                "RemoteControl",
-                "ApplianceElc",
-                "ApplianceMainBoardSwVersion",
-                "ApplianceBootState",
-                "ExecuteCommand",
-                "StartTime",
-                "WaterHardness",
-                "NiuAlertEvent",
-                "CycleSubPhase",
-                "Language",
-                "UserSelections",
-                "WashingNominalLoadWeight",
-                "AppliancePnc",
-                "MaxLoadDetergentDoseTwo",
-                "ApplianceState",
-                "DoorState",
-                "ProgramParameters",
-                "WaterSoftenerMode",
-                "ApplianceTotalWorkingTime",
-                "MacAddress",
-                "TimeToEnd",
-                "AlertEvent",
-                "ApplianceUiSwVersion",
-                "LocalTime",
-                "UiLockMode",
-                "CyclePhase",
-                "SerialNumber",
-                "InstallationState",
-                "TotalCycleCounter"
-        };
+        return WMGrammar.availableNames();
     }
 }

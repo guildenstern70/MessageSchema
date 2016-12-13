@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) IBM Corporation 2016.
+ * This is copyrighted software. All rights reserved.
+ * IBM - Electrolux - ECP Project
+ */
+
 package it.com.ibm.elux.spike;
 
 import java.util.Random;
@@ -44,7 +50,7 @@ public class Generator
 
     public static ApplianceMessage genUserSelections(ApplianceMessage am)
     {
-        am.setName("UserSelections");
+        am.setName("1C09");  // UserSelections
         Component[] properties =
                 ComponentsGenerator.userSelectionsGenerator();
 
@@ -58,7 +64,7 @@ public class Generator
 
     public static ApplianceMessage genProgramParams(ApplianceMessage am)
     {
-        am.setName("ProgramParameters");
+        am.setName("1C0A");  // ProgramParameters
 
         Component[] properties =
                 ComponentsGenerator.programParametersGenerator();
