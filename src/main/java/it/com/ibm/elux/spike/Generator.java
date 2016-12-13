@@ -35,19 +35,19 @@ public class Generator
 
     public static ApplianceMessage generatePlain(ApplianceMessage am)
     {
-        am.getMainProperty().setName(LookupTables.getRandomName());
-        am.getMainProperty().setValue(Component.getRandom());
+        Component mainComponent = new Component();
+        mainComponent.setName(LookupTables.getRandomName());
+        mainComponent.setValue(Component.getRandom());
+        am.addComponent(mainComponent);
         return am;
     }
 
     public static ApplianceMessage genUserSelections(ApplianceMessage am)
     {
-        Component component = am.getMainProperty();
-        component.setName("UserSelections");
-        component.setValue("Container");
-
+        am.setName("UserSelections");
         Component[] properties =
                 ComponentsGenerator.userSelectionsGenerator();
+
         for (Component xprop : properties)
         {
             am.addComponent(xprop);
@@ -58,10 +58,7 @@ public class Generator
 
     public static ApplianceMessage genProgramParams(ApplianceMessage am)
     {
-
-        Component component = am.getMainProperty();
-        component.setName("ProgramParameters");
-        component.setValue("Container");
+        am.setName("ProgramParameters");
 
         Component[] properties =
                 ComponentsGenerator.programParametersGenerator();

@@ -17,7 +17,6 @@ public class Main
         System.out.println("");
         System.out.println("Message Schema v.0.1");
         System.out.println("");
-
         printSchema();
 
         System.out.println("");

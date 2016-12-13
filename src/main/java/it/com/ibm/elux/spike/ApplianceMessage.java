@@ -1,6 +1,5 @@
 package it.com.ibm.elux.spike;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -18,24 +17,23 @@ public class ApplianceMessage
     private String destination;
     private String version;
 
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    private String name;
+
     @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
     private List<Component> components;
 
     private Date timestamp;
     private OperationMode operationMode;
 
-    public ApplianceMessage()
+    ApplianceMessage()
     {
         this.components = new ArrayList<>();
-
-        Component component = new Component();
-        this.components.add(component);
-
         this.timestamp = new Date();
         this.operationMode = OperationMode.INF_SEND;
     }
 
-    public void addComponent(Component component)
+    void addComponent(Component component)
     {
         this.components.add(component);
     }
@@ -45,7 +43,7 @@ public class ApplianceMessage
         return version;
     }
 
-    public void setVersion(String version)
+    void setVersion(String version)
     {
         this.version = version;
     }
@@ -60,12 +58,12 @@ public class ApplianceMessage
         return operationMode;
     }
 
-    public void setOperationMode(OperationMode operationMode)
+    void setOperationMode(OperationMode operationMode)
     {
         this.operationMode = operationMode;
     }
 
-    public String toJson()
+    String toJson()
     {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = null;
@@ -85,12 +83,6 @@ public class ApplianceMessage
     {
         Component mainComponent = this.components.get(0);
         return "[" + this.version + "] " + mainComponent.getName() + " = " + mainComponent.getValue().toString();
-    }
-
-    @JsonIgnore
-    Component getMainProperty()
-    {
-        return this.components.get(0);
     }
 
     public String getSource()
@@ -118,10 +110,13 @@ public class ApplianceMessage
         return components;
     }
 
-    @JsonIgnore
     public String getName()
     {
-        return this.components.get(0).getName();
+        return name;
     }
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 }

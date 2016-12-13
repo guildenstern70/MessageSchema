@@ -1,5 +1,7 @@
 package it.com.ibm.elux.spike;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.Random;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Random;
 public class LookupTables
 {
 
-    public static String getRandomName()
+    static String getRandomName()
     {
         int propertyLen = LookupTables.getNames().length;
         int index = new Random().nextInt(propertyLen-1);
@@ -22,21 +24,22 @@ public class LookupTables
         return LookupTables.getUnits()[index];
     }
 
-    public static String getRandomString()
+    static String getRandomString()
     {
         int propertyLen = LookupTables.getStrings().length;
         int index = new Random().nextInt(propertyLen-1);
         return LookupTables.getStrings()[index];
     }
 
-    public static String getRandomParent()
+    static String getRandomParent()
     {
         int propertyLen = LookupTables.getParents().length;
         int index = new Random().nextInt(propertyLen-1);
         return LookupTables.getParents()[index];
     }
 
-    public static String[] getParents()
+    @Contract(" -> !null")
+    private static String[] getParents()
     {
         return new String[]{
                 "FC-User Selections",
@@ -44,7 +47,8 @@ public class LookupTables
         };
     }
 
-    public static String[] getStrings()
+    @Contract(" -> !null")
+    private static String[] getStrings()
     {
         return new String[]{
                 "Running",
@@ -61,7 +65,8 @@ public class LookupTables
         };
     }
 
-    public static String[] getUnits()
+    @Contract(" -> !null")
+    static String[] getUnits()
     {
         return new String[]{
                 "secs",
@@ -76,7 +81,8 @@ public class LookupTables
         };
     }
 
-    public static String[] getNames()
+    @Contract(" -> !null")
+    private static String[] getNames()
     {
         return new String[] {
                 "ApplianceMode",
