@@ -16,7 +16,7 @@ public class Generator
 
     public static ApplianceMessage generate(Random rnd)
     {
-        ApplianceMessage am = new ApplianceMessage();
+        ApplianceMessage am = ApplianceMessage.create();
         am.setVersion("ad");
         am.setSource("WM1");
         am.setDestination("ECP");
@@ -36,6 +36,41 @@ public class Generator
             am = Generator.generatePlain(am);
         }
 
+        if (nextInt == 10 || nextInt == 11)
+        {
+            am.addMetadata("Weight Unit", "kg");
+            am.addMetadata("Temperature Unit", "C");
+            am.addMetadata("Test", "true");
+        }
+
+        return am;
+    }
+
+    public static ApplianceMessage genUserSelections(ApplianceMessage am)
+    {
+        am.setMainComponent("1C09", true);  // UserSelections
+        Component[] properties =
+                ComponentsGenerator.userSelectionsGenerator();
+
+        for (Component property : properties)
+        {
+            am.addComponent(property);
+        }
+
+        return am;
+    }
+
+    public static ApplianceMessage genProgramParams(ApplianceMessage am)
+    {
+        am.setMainComponent("1C0A", true);  // ProgramParameters
+
+        Component[] properties =
+                ComponentsGenerator.programParametersGenerator();
+        for (Component property : properties)
+        {
+            am.addComponent(property);
+        }
+
         return am;
     }
 
@@ -45,34 +80,6 @@ public class Generator
         mainComponent.setName(LookupTables.getRandomName());
         mainComponent.setValue(Component.getRandom());
         am.addComponent(mainComponent);
-        return am;
-    }
-
-    public static ApplianceMessage genUserSelections(ApplianceMessage am)
-    {
-        am.setName("1C09");  // UserSelections
-        Component[] properties =
-                ComponentsGenerator.userSelectionsGenerator();
-
-        for (Component xprop : properties)
-        {
-            am.addComponent(xprop);
-        }
-
-        return am;
-    }
-
-    public static ApplianceMessage genProgramParams(ApplianceMessage am)
-    {
-        am.setName("1C0A");  // ProgramParameters
-
-        Component[] properties =
-                ComponentsGenerator.programParametersGenerator();
-        for (Component xprop : properties)
-        {
-            am.addComponent(xprop);
-        }
-
         return am;
     }
 

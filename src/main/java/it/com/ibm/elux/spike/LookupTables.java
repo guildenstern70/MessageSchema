@@ -23,6 +23,12 @@ public class LookupTables
         return LookupTables.getNames()[index];
     }
 
+    @Contract(" -> !null")
+    private static String[] getNames()
+    {
+        return WMGrammar.availableNames();
+    }
+
     public static String getRandomUnit()
     {
         int propertyLen = LookupTables.getUnits().length;
@@ -30,53 +36,11 @@ public class LookupTables
         return LookupTables.getUnits()[index];
     }
 
-    static String getRandomString()
-    {
-        int propertyLen = LookupTables.getStrings().length;
-        int index = new Random().nextInt(propertyLen-1);
-        return LookupTables.getStrings()[index];
-    }
-
-    static String getRandomParent()
-    {
-        int propertyLen = LookupTables.getParents().length;
-        int index = new Random().nextInt(propertyLen-1);
-        return LookupTables.getParents()[index];
-    }
-
-    @Contract(" -> !null")
-    private static String[] getParents()
-    {
-        return new String[]{
-                "FC-User Selections",
-                "FC-Program Parameters"
-        };
-    }
-
-    @Contract(" -> !null")
-    private static String[] getStrings()
-    {
-        return new String[]{
-                "Running",
-                "Paused",
-                "Stand-By",
-                "Temporary Locked",
-                "Open",
-                "Close",
-                "Fix",
-                "Stay",
-                "Numbered",
-                "Emerald",
-                "Working"
-        };
-    }
-
     @Contract(" -> !null")
     static String[] getUnits()
     {
         return new String[]{
                 "secs",
-                "msecs",
                 "min",
                 "h",
                 "days",
@@ -87,9 +51,28 @@ public class LookupTables
         };
     }
 
-    @Contract(" -> !null")
-    private static String[] getNames()
+    static String getRandomString()
     {
-        return WMGrammar.availableNames();
+        int propertyLen = LookupTables.getStrings().length;
+        int index = new Random().nextInt(propertyLen - 1);
+        return LookupTables.getStrings()[index];
+    }
+
+    @Contract(" -> !null")
+    private static String[] getStrings()
+    {
+        return new String[]{
+                "0A",
+                "0B",
+                "1B",
+                "1A",
+                "2F",
+                "2C",
+                "3A",
+                "3B",
+                "3D",
+                "4E",
+                "5F"
+        };
     }
 }

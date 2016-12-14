@@ -7,7 +7,7 @@
 package it.com.ibm.elux.spike.test;
 
 import it.com.ibm.elux.spike.ApplianceMessage;
-import it.com.ibm.elux.spike.ApplianceMessageFactory;
+import it.com.ibm.elux.spike.Component;
 import it.com.ibm.elux.spike.Generator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,24 +27,53 @@ public class BasicTest
 
         for (String json : jsons)
         {
-            ApplianceMessage am = ApplianceMessageFactory.fromJSON(json);
+            ApplianceMessage am = ApplianceMessage.fromJSON(json);
             Assert.assertNotNull(am);
             System.out.println(am.toString());
         }
     }
 
     @Test
-    public void generate()
+    public void generateContainer()
+    {
+        Component[] components = InputValues.getContainerComponents();
+        ApplianceMessage am = ApplianceMessage.createContainer("1C0A", components);
+        Assert.assertEquals("1C0A", am.getName());
+    }
+
+    @Test
+    public void generateSimple()
+    {
+        ApplianceMessage am = ApplianceMessage.create("1C14", 200);
+        Assert.assertEquals("1C14", am.getName());
+        Assert.assertEquals(200, am.getValue());
+    }
+
+    @Test
+    public void generateSimpleWithMetadata()
+    {
+        ApplianceMessage am = ApplianceMessage.create("1C12", 45);
+        am.addMetadata("Units", "kg");
+        Assert.assertEquals("1C12", am.getName());
+        Assert.assertEquals(45, am.getValue());
+        Assert.assertEquals("kg", am.getMetadata("Units"));
+    }
+
+    @Test
+    public void generatedJSON()
     {
         int howMany = 100;
         Random rnd = new Random();
+        System.out.println("[");
         while (howMany>0)
         {
             ApplianceMessage am = Generator.generate(rnd);
             Assert.assertNotNull(am);
-            System.out.println(am.toString());
+            System.out.print(am.toJson());
+            System.out.println(",");
             howMany--;
         }
+        System.out.println("]");
     }
 
 

@@ -11,7 +11,6 @@ import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 
 import java.io.IOException;
-import java.util.Random;
 
 /**
  *
@@ -24,12 +23,6 @@ public class Main
         System.out.println("Message Schema v.0.1");
         System.out.println("");
         printSchema();
-
-        System.out.println("");
-        System.out.println("Message Examples v.0.1");
-        System.out.println("");
-        Main.getJSONs();
-
     }
 
     private static void printSchema()
@@ -44,20 +37,6 @@ public class Main
             e.printStackTrace();
         }
         System.out.println(schema);
-    }
-
-    private static void getJSONs()
-    {
-        int howMany = 100;
-        Random rnd = new Random();
-        while (howMany>0)
-        {
-            System.out.println("");
-            System.out.println("");
-            ApplianceMessage am = Generator.generate(rnd);
-            System.out.println(am.toJson());
-            howMany--;
-        }
     }
 
     private static String getJSONSchema(Class clazz) throws IOException
