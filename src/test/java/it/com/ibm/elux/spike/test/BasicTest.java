@@ -9,6 +9,7 @@ package it.com.ibm.elux.spike.test;
 import it.com.ibm.elux.spike.ApplianceMessage;
 import it.com.ibm.elux.spike.Component;
 import it.com.ibm.elux.spike.Generator;
+import it.com.ibm.elux.spike.Message;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,14 +38,14 @@ public class BasicTest
     public void generateContainer()
     {
         Component[] components = InputValues.getContainerComponents();
-        ApplianceMessage am = ApplianceMessage.createContainer("1C0A", components);
+        Message am = Message.createContainer("1C0A", components);
         Assert.assertEquals("1C0A", am.getName());
     }
 
     @Test
     public void generateSimple()
     {
-        ApplianceMessage am = ApplianceMessage.create("1C14", 200);
+        Message am = Message.create("1C14", 200);
         Assert.assertEquals("1C14", am.getName());
         Assert.assertEquals(200, am.getValue());
     }
@@ -52,7 +53,7 @@ public class BasicTest
     @Test
     public void generateSimpleWithMetadata()
     {
-        ApplianceMessage am = ApplianceMessage.create("1C12", 45);
+        Message am = Message.create("1C12", 45);
         am.addMetadata("Units", "kg");
         Assert.assertEquals("1C12", am.getName());
         Assert.assertEquals(45, am.getValue());

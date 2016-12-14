@@ -14,9 +14,9 @@ import java.util.Random;
 public class Generator
 {
 
-    public static ApplianceMessage generate(Random rnd)
+    public static Message generate(Random rnd)
     {
-        ApplianceMessage am = ApplianceMessage.create();
+        Message am = Message.create();
         am.setVersion("ad");
         am.setSource("WM1");
         am.setDestination("ECP");
@@ -46,7 +46,7 @@ public class Generator
         return am;
     }
 
-    public static ApplianceMessage genUserSelections(ApplianceMessage am)
+    public static Message genUserSelections(Message am)
     {
         am.setMainComponent("1C09", true);  // UserSelections
         Component[] properties =
@@ -60,7 +60,7 @@ public class Generator
         return am;
     }
 
-    public static ApplianceMessage genProgramParams(ApplianceMessage am)
+    public static Message genProgramParams(Message am)
     {
         am.setMainComponent("1C0A", true);  // ProgramParameters
 
@@ -74,7 +74,7 @@ public class Generator
         return am;
     }
 
-    public static ApplianceMessage generatePlain(ApplianceMessage am)
+    public static Message generatePlain(Message am)
     {
         Component mainComponent = new Component();
         mainComponent.setName(LookupTables.getRandomName());

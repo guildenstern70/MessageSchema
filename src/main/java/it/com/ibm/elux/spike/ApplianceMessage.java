@@ -6,83 +6,34 @@
 
 package it.com.ibm.elux.spike;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 /**
  *
  */
-public class ApplianceMessage
+public class ApplianceMessage implements Serializable
 {
+    protected String version;
+    @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
+    protected List<Component> components;
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    protected Map<String, String> metadata;
     private String source;
     private String destination;
-    private String version;
-
-    @JsonSerialize(include= JsonSerialize.Inclusion.NON_NULL)
-    private List<Component> components;
-
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-    private Map<String, String> metadata;
-
     private Date timestamp;
     private OperationMode operationMode;
 
-    private ApplianceMessage()
+    public ApplianceMessage()
     {
         this.metadata = null;
         this.components = new ArrayList<>();
         this.timestamp = new Date();
         this.operationMode = OperationMode.INF_SEND;
-    }
-
-    public static ApplianceMessage create()
-    {
-        return new ApplianceMessage();
-    }
-
-    public static ApplianceMessage create(String name, String value, Map<String, String> metadata)
-    {
-        ApplianceMessage am = ApplianceMessage.create(name, value);
-        am.setMetadata(metadata);
-        return am;
-    }
-
-    public static ApplianceMessage create(String name, Object value)
-    {
-        ApplianceMessage am = new ApplianceMessage();
-        Component component = new Component();
-        component.setName(name);
-        component.setValue(value);
-        am.addComponent(component);
-        return am;
-    }
-
-    public void addComponent(Component component)
-    {
-        this.components.add(component);
-    }
-
-    public static ApplianceMessage createContainer(String name, Component[] components)
-    {
-        ApplianceMessage am = new ApplianceMessage();
-        am.setMainComponent(name, true);
-        for (Component entry : components)
-        {
-            am.addComponent(entry);
-        }
-        return am;
-    }
-
-    protected void setMainComponent(String name, boolean container)
-    {
-        Component component = new Component();
-        component.setName(name);
-        if (container) component.setValue("Container");
-        this.addComponent(component);
     }
 
     public static ApplianceMessage fromJSON(String jsonMessage)
@@ -98,6 +49,19 @@ public class ApplianceMessage
             e.printStackTrace();
         }
         return am;
+    }
+
+    protected void setMainComponent(String name, boolean container)
+    {
+        Component component = new Component();
+        component.setName(name);
+        if (container) component.setValue("Container");
+        this.addComponent(component);
+    }
+
+    public void addComponent(Component component)
+    {
+        this.components.add(component);
     }
 
     public void addMetadata(String key, String value)
@@ -184,54 +148,18 @@ public class ApplianceMessage
         this.destination = destination;
     }
 
-    @JsonIgnore
-    public String getName()
-    {
-        if (this.getMainComponent() == null) return null;
-        return this.getMainComponent().getName();
-    }
-
-    @JsonIgnore
-    protected Component getMainComponent()
-    {
-        return this.components.get(0);
-    }
-
-    @JsonIgnore
-    public Object getValue()
-    {
-        if (this.getMainComponent() == null) return null;
-        return this.getMainComponent().getValue();
-    }
-
     @Override
     public String toString()
     {
         StringBuilder sb = new StringBuilder("[" + this.version + "] ");
-        if (this.isContainer())
+
+        for (Component c : this.getComponents())
         {
-            sb.append("CONTAINER ");
-            sb.append("Name: ").append(this.getMainComponent().getName()).append("\n");
-            for (Component c : this.getComponents())
-            {
-                sb.append(c.toString());
-                sb.append("\n");
-            }
-        }
-        else
-        {
-            Component mainComponent = this.components.get(0);
-            sb.append(" Name = ").append(mainComponent.getName());
-            sb.append(" Value = ").append(mainComponent.getValue());
+            sb.append(c.toString());
+            sb.append("\n");
         }
 
         return sb.toString();
-    }
-
-    @JsonIgnore
-    protected boolean isContainer()
-    {
-        return this.getMainComponent().getValue().equals("Container");
     }
 
     public List<Component> getComponents()
